@@ -12,8 +12,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
     
-    // This method will be called when the app responds with .continueInApp
-    // when it has no connected scenes
+    // This method is called when the app responds with `.continueInApp`
+    // when it has no connected scenes.
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         for userActivity in connectionOptions.userActivities {
             handleUserActivity(userActivity)

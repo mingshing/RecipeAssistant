@@ -36,14 +36,14 @@ class IntentHandler: NSObject, ShowDirectionsIntentHandling {
         guard let recipe = recipe(for: intent),
               let nextStepProvider = self.nextStepProvider,
               UIApplication.shared.applicationState != .background else {
-            // If the app is in the background, responding with `.continueInApp` will
+            // If the app is in the background, respond with `.continueInApp` to
             // launch the app into the foreground.
             //
             // If there are no scenes connected to the app,
-            // the `scene(_:willConnectTo:options:)` will be invoked on the scene delegate.
+            // the system invokes the `scene(_:willConnectTo:options:)` method on the scene delegate.
             //
             // If there are scenes connected to the app,
-            // the `scene(_:continue:)` method will be invoked on the scene delegate.
+            // the system invokes the `scene(_:continue:)` method on the scene delegate.
             completion(ShowDirectionsIntentResponse(code: .continueInApp, userActivity: nil))
             return
         }
@@ -59,10 +59,10 @@ class IntentHandler: NSObject, ShowDirectionsIntentHandling {
 /// All of the view controllers in this app use this protocol to respond to voice commands when they're frontmost.
 protocol NextStepProviding: NSObject {
     
-    /// The intent handler object will be used to process resolve, confirm, and handle phases.
+    /// The intent handler object processes resolve, confirm, and handle phases.
     var intentHandler: IntentHandler { get }
     
-    /// When the intent handler is ready to advance to the next step, the `nextStep` method will be called.
+    /// When the intent handler is ready to advance to the next step, the app calls the `nextStep` method.
     @discardableResult
     func nextStep(recipe: Recipe) -> ShowDirectionsIntentResponse
     

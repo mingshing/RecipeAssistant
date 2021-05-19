@@ -69,7 +69,7 @@ extension Recipe: CaseIterable {
                     "Add chickpeas and soy sauce, and cook on a medium heat for 5 minutes, " +
                     "bringing the curry to a boil. If it starts to burn, reduce heat immediately.",
                     "Add the chopped tomatoes, chopped basil, lime juice, soy sauce and gently simmer the curry for another 2 minutes.",
-                    "If desired add a second tbsp soy sauce and the syrup or brown sugar. Give it another stir.",
+                    "If desired, add a second tbsp soy sauce and the syrup or brown sugar. Give it another stir.",
                     "Garnish with cilantro and serve with lime wedges and rice."
                    ]
             ),
@@ -94,8 +94,8 @@ extension Recipe: CaseIterable {
                    ],
                    directions: [
                     "Preheat oven to 360F.",
-                    "In large bowl mix together all dry ingredients.",
-                    "In a separate large bowl mix together all wet ingredients.",
+                    "In large bowl, mix together all dry ingredients.",
+                    "In a separate large bowl, mix together all wet ingredients.",
                     "Using a hand mixer or whisk, add dry ingredients to the " +
                     "wet ingredients and mix together well until you get a smooth batter.",
                     "Line a baking tin with baking paper and then spray the sides with oil.",

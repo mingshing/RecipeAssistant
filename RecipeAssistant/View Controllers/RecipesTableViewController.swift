@@ -29,7 +29,7 @@ class RecipesTableViewController: UITableViewController, NextStepProviding {
         if sender is UITableViewCell,
             let selectedIndexPaths = tableView.indexPathsForSelectedRows,
             let selectedIndexPath = selectedIndexPaths.first {
-            recipe = Recipe.allCases[selectedIndexPath.row]
+            recipe = Recipe.allRecipes[selectedIndexPath.row]
         }
         
         if let destination = segue.destination as? RecipeDetailViewController, let recipe = recipe {
@@ -52,12 +52,12 @@ extension RecipesTableViewController {
     // MARK: - Table view data source
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Recipe.allCases.count
+        return Recipe.allRecipes.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "RecipeDetailCell", for: indexPath)
-        let recipe = Recipe.allCases[indexPath.row]
+        let recipe = Recipe.allRecipes[indexPath.row]
         if let iconImageName = recipe.iconImageName {
             cell.imageView?.image = UIImage(named: iconImageName)
         }

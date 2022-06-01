@@ -8,11 +8,9 @@ This type encapsulates the attributes of a recipe.
 import Foundation
 import Intents
 
-extension Recipe: CaseIterable {
+extension Recipe {
     
-    public typealias AllCases = [Recipe]
-    
-    public static var allCases: [Recipe] {
+    public static var allRecipes: [Recipe] {
         return [
             Recipe(name: "Spicy Tomato Sauce",
                    iconImageName: "spicy_tomato_sauce",

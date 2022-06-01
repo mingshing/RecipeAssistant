@@ -21,12 +21,12 @@ class IntentHandler: NSObject, ShowDirectionsIntentHandling {
     // MARK: - ShowDirectionsIntentHandling
     
     func provideRecipeOptionsCollection(for intent: ShowDirectionsIntent, with completion: @escaping (INObjectCollection<Recipe>?, Error?) -> Void) {
-        completion(INObjectCollection(items: Recipe.allCases), nil)
+        completion(INObjectCollection(items: Recipe.allRecipes), nil)
     }
     
     func resolveRecipe(for intent: ShowDirectionsIntent, with completion: @escaping (RecipeResolutionResult) -> Void) {
         guard let recipe = recipe(for: intent) else {
-            completion(RecipeResolutionResult.disambiguation(with: Recipe.allCases))
+            completion(RecipeResolutionResult.disambiguation(with: Recipe.allRecipes))
             return
         }
         completion(RecipeResolutionResult.success(with: recipe))

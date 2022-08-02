@@ -41,9 +41,9 @@ class RecipesTableViewController: UITableViewController, NextStepProviding {
     
     lazy var intentHandler = IntentHandler(nextStepProvider: self)
     
-    func nextStep(recipe: Recipe) -> ShowDirectionsIntentResponse {
+    func nextStep(recipe: Recipe) -> NextDirectionsIntentResponse {
         performSegue(withIdentifier: "Recipe Details", sender: recipe)
-        return ShowDirectionsIntentResponse.showIngredients(recipe: recipe)
+        return NextDirectionsIntentResponse.showIngredients(recipe: recipe)
     }
 }
 

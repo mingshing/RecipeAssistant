@@ -8,24 +8,56 @@ A view controller that displays the directions for a recipe.
 import UIKit
 import Intents
 import IntentsUI
+import AVFoundation
 
-class RecipeDirectionsViewController: UITableViewController, NextStepProviding {
+class RecipeDirectionsViewController: UITableViewController, NextStepProviding, PreviousStepProviding, RepeatStepProviding {
     
     var recipe: Recipe!
-    var currentStep = 1
+    var currentStep: Int = 0 {
+        didSet {
+            guard let directions = recipe.directions else { return }
+            guard currentStep > 0 && currentStep < directions.count else { return }
+            self.readSentence(directions[currentStep - 1])
+        }
+    }
     
     // MARK: - View lifecycle
+    internal var ttsManager = AVSpeechSynthesizer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setAudioSession()
+        currentStep = 1
+        
+        
         self.navigationController?.isToolbarHidden = false
         self.toolbarItems = [
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
             UIBarButtonItem(customView: {
                 let button = INUIAddVoiceShortcutButton(style: .automaticOutline)
                 button.shortcut = INShortcut(intent: {
-                    let intent = ShowDirectionsIntent()
-                    intent.suggestedInvocationPhrase = "Next Step"
+                    let intent = NextDirectionsIntent()
+                    intent.suggestedInvocationPhrase = "下一步"
+                    return intent
+                }())
+                button.delegate = self
+                return button
+            }()),
+            UIBarButtonItem(customView: {
+                let button = INUIAddVoiceShortcutButton(style: .automaticOutline)
+                button.shortcut = INShortcut(intent: {
+                    let intent = PreviousDirectionsIntent()
+                    intent.suggestedInvocationPhrase = "上一步"
+                    return intent
+                }())
+                button.delegate = self
+                return button
+            }()),
+            UIBarButtonItem(customView: {
+                let button = INUIAddVoiceShortcutButton(style: .automaticOutline)
+                button.shortcut = INShortcut(intent: {
+                    let intent = RepeatDirectionsIntent()
+                    intent.suggestedInvocationPhrase = "重複這一步"
                     return intent
                 }())
                 button.delegate = self
@@ -38,11 +70,24 @@ class RecipeDirectionsViewController: UITableViewController, NextStepProviding {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         AppIntentHandler.shared.currentIntentHandler = intentHandler
+        UIApplication.shared.isIdleTimerDisabled = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.setToolbarHidden(true, animated: true)
+        UIApplication.shared.isIdleTimerDisabled = false
+    }
+    
+    private func setAudioSession() {
+        do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback, options: AVAudioSession.CategoryOptions.mixWithOthers)
+            NSLog("Playback OK")
+            try AVAudioSession.sharedInstance().setActive(true)
+            NSLog("Session is Active")
+        } catch {
+            NSLog("ERROR: CANNOT PLAY MUSIC IN BACKGROUND. Message from code: \"\(error)\"")
+        }
     }
     
     // MARK: - Actions
@@ -53,18 +98,49 @@ class RecipeDirectionsViewController: UITableViewController, NextStepProviding {
     
     // MARK: - NextStepProviding
     
-    lazy var intentHandler = IntentHandler(nextStepProvider: self, currentRecipe: recipe)
+    lazy var intentHandler = IntentHandler(nextStepProvider: self, previousStepProvider: self, currentRecipe: recipe)
     
     @discardableResult
-    func nextStep(recipe: Recipe) -> ShowDirectionsIntentResponse {
-        guard let directions = recipe.directions else {
-            return ShowDirectionsIntentResponse(code: .failure, userActivity: nil)
+    func nextStep(recipe: Recipe) -> NextDirectionsIntentResponse {
+        guard let directions = self.recipe.directions else {
+            return NextDirectionsIntentResponse(code: .failure, userActivity: nil)
         }
         currentStep = currentStep >= directions.count ? 1 : currentStep + 1
         self.navigationItem.rightBarButtonItem?.title = (currentStep >= directions.count ? "Start Over" : "Next Step")
         tableView.reloadSections([0], with: .automatic)
-        return ShowDirectionsIntentResponse.showDirections(step: NSNumber(value: currentStep),
+        return NextDirectionsIntentResponse.showDirections(step: NSNumber(value: currentStep),
                                                            directions: directions[currentStep - 1])
+    }
+    
+    @discardableResult
+    func previousStep(recipe: Recipe) -> PreviousDirectionsIntentResponse {
+        guard let _ = self.recipe.directions else {
+            return PreviousDirectionsIntentResponse(code: .failure, userActivity: nil)
+        }
+        currentStep = currentStep == 1 ? 1 : currentStep - 1
+        
+        tableView.reloadSections([0], with: .automatic)
+        
+        return PreviousDirectionsIntentResponse(code: .success, userActivity: nil)
+    }
+    
+    @discardableResult
+    func repeatStep(recipe: Recipe) -> RepeatDirectionsIntentResponse {
+        guard let directions = self.recipe.directions else {
+            return RepeatDirectionsIntentResponse(code: .failure, userActivity: nil)
+        }
+        readSentence(directions[currentStep - 1])
+        
+        return RepeatDirectionsIntentResponse(code: .success, userActivity: nil)
+    }
+    
+    private func readSentence(_ str: String) {
+        let seconds = 4.0
+        DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+            let utterance = AVSpeechUtterance(string: str)
+            utterance.voice = AVSpeechSynthesisVoice(language: "zh-Hant")
+            self.ttsManager.speak(utterance)
+        }
     }
     
 }

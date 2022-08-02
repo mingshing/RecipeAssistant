@@ -15,14 +15,15 @@ class RecipeDetailViewController: UITableViewController, NextStepProviding {
     // MARK: - Sections
     
     private enum SectionType {
-        case servings, time, ingredients
+        case servings, time, ingredients, directions
     }
     
     private typealias SectionModel = (sectionType: SectionType, title: String, rowContent: [String])
     private lazy var sectionData: [SectionModel] = [
         SectionModel(sectionType: .servings, title: "Servings", rowContent: [recipe.servings ?? ""]),
         SectionModel(sectionType: .time, title: "Time", rowContent: [recipe.time ?? ""]),
-        SectionModel(sectionType: .ingredients, title: "Ingredients", rowContent: recipe.ingredients ?? [])
+        SectionModel(sectionType: .ingredients, title: "Ingredients", rowContent: recipe.ingredients ?? []),
+        SectionModel(sectionType: .directions, title: "Steps", rowContent: recipe.directions ?? [])
     ]
     
     // MARK: - View lifecycle
@@ -51,12 +52,12 @@ class RecipeDetailViewController: UITableViewController, NextStepProviding {
     
     lazy var intentHandler = IntentHandler(nextStepProvider: self, currentRecipe: recipe)
     
-    func nextStep(recipe: Recipe) -> ShowDirectionsIntentResponse {
+    func nextStep(recipe: Recipe) -> NextDirectionsIntentResponse {
         guard let directions = recipe.directions, let firstDirection = directions.first else {
-            return ShowDirectionsIntentResponse(code: .failure, userActivity: nil)
+            return NextDirectionsIntentResponse(code: .failure, userActivity: nil)
         }
         performSegue(withIdentifier: "Directions", sender: recipe)
-        return ShowDirectionsIntentResponse.showDirections(step: NSNumber(value: 1), directions: firstDirection)
+        return NextDirectionsIntentResponse.showDirections(step: NSNumber(value: 1), directions: firstDirection)
     }
     
 }

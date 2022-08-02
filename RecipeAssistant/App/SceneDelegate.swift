@@ -35,10 +35,22 @@ extension SceneDelegate {
                 return
         }
         
-        if let intent = interaction.intent as? ShowDirectionsIntent,
+        if let intent = interaction.intent as? NextDirectionsIntent,
            let recipe = intent.recipe,
            let viewController = rootViewController.viewControllers.last as? NextStepProviding {
             viewController.nextStep(recipe: recipe)
+        }
+        
+        if let intent = interaction.intent as? PreviousDirectionsIntent,
+           let recipe = intent.recipe,
+           let viewController = rootViewController.viewControllers.last as? PreviousStepProviding {
+            viewController.previousStep(recipe: recipe)
+        }
+        
+        if let intent = interaction.intent as? RepeatDirectionsIntent,
+           let recipe = intent.recipe,
+           let viewController = rootViewController.viewControllers.last as? RepeatStepProviding {
+            viewController.repeatStep(recipe: recipe)
         }
     }
     

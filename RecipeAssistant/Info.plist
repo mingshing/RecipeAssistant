@@ -22,7 +22,9 @@
 	<string>1</string>
 	<key>INIntentsSupported</key>
 	<array>
-		<string>ShowDirectionsIntent</string>
+		<string>RepeatDirectionsIntent</string>
+		<string>NextDirectionsIntent</string>
+		<string>PreviousDirectionsIntent</string>
 	</array>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.food-and-drink</string>
@@ -30,7 +32,9 @@
 	<true/>
 	<key>NSUserActivityTypes</key>
 	<array>
-		<string>ShowDirectionsIntent</string>
+		<string>RepeatDirectionsIntent</string>
+		<string>NextDirectionsIntent</string>
+		<string>PreviousDirectionsIntent</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>

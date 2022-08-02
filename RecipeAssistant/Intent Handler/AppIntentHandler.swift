@@ -12,6 +12,6 @@ class AppIntentHandler {
     
     static var shared = AppIntentHandler()
     
-    weak var currentIntentHandler: ShowDirectionsIntentHandling?
+    weak var currentIntentHandler: NextDirectionsIntentHandling?
     
 }

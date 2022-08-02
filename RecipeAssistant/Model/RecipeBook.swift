@@ -71,36 +71,31 @@ extension Recipe {
                     "Garnish with cilantro and serve with lime wedges and rice."
                    ]
             ),
-            Recipe(name: "Cinnamon Apple Cake",
-                   iconImageName: "apple_cake",
-                   servings: "8 slices",
-                   time: "45 minutes",
+            Recipe(name: "香菇雞湯",
+                   iconImageName: "test_recipe",
+                   servings: "8 片",
+                   time: "45 分鐘",
                    ingredients: [
-                    "1 2/3 cups flour",
-                    "1/2 cup brown sugar",
-                    "1 tsp baking powder",
-                    "1 tsp cinnamon",
-                    "1 tsp nutmeg",
-                    "1 cup coconut milk",
-                    "1/3 cup canola oil",
-                    "1 1/2 tsp vanilla",
-                    "1 tbsp apple cider vinegar",
-                    "2 apples, peeled and thinly sliced",
-                    "canola oil spray",
-                    "powdered sugar",
-                    "1/2 tsp cinnamon"
+                    "帶皮雞腿肉 500克（或 1 支）",
+                    "油 10克",
+                    "薑 10克",
+                    "米酒 適量",
+                    "水 適量",
+                    "紅棗 10克",
+                    "乾香菇 5 朵",
+                    "枸杞 5 克",
+                    "鹽 1 茶匙",
+                    "湯鍋 1 個"
                    ],
                    directions: [
-                    "Preheat oven to 360F.",
-                    "In large bowl, mix together all dry ingredients.",
-                    "In a separate large bowl, mix together all wet ingredients.",
-                    "Using a hand mixer or whisk, add dry ingredients to the " +
-                    "wet ingredients and mix together well until you get a smooth batter.",
-                    "Line a baking tin with baking paper and then spray the sides with oil.",
-                    "Pour batter into the cake tin and spread evenly.",
-                    "Place the apple slices on the batter in a star shape.",
-                    "Bake the cake in the preheated oven for 35 minutes.",
-                    "Let cool, then sprinkle with powdered sugar and cinnamon."
+                    "乾香菇以熱水浸泡，放置於一旁",
+                    "事先將開水煮沸，把帶皮雞腿川燙 30-60 秒去除雜質及血水，或至表面不紅就可以撈起（若雞腿較大塊，可以燙久一點），並將水倒掉",
+                    "將香菇和薑切片",
+                    "油和薑放入鍋中爆香",
+                    "加入雞腿肉、香菇和紅棗，再加入水與米酒至淹過食材後，熬煮約 25 分鐘",
+                    "加入鹽和枸杞，熬煮約 5 分鐘",
+                    "熄火，燜 3-5 分鐘",
+                    "完成"
                    ])
         ]
     }

@@ -16,7 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, handlerFor intent: INIntent) -> Any? {
         guard intent is NextDirectionsIntent ||
                 intent is PreviousDirectionsIntent ||
-                intent is RepeatDirectionsIntent else {
+                intent is RepeatDirectionsIntent ||
+                intent is StartIntent else {
             return nil
         }
         

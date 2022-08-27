@@ -8,23 +8,26 @@ An intent handler for `ShowDirectionsIntent` that returns recipes and the next s
 import UIKit
 import Intents
 
-class IntentHandler: NSObject, NextDirectionsIntentHandling, PreviousDirectionsIntentHandling, RepeatDirectionsIntentHandling {
+class IntentHandler: NSObject, NextDirectionsIntentHandling, PreviousDirectionsIntentHandling, RepeatDirectionsIntentHandling, StartIntentHandling {
 
     
     var currentRecipe: Recipe?
     weak var nextStepProvider: NextStepProviding?
     weak var previousStepProvider: PreviousStepProviding?
     weak var repeatStepProvider: RepeatStepProviding?
+    weak var startCookingProvider: StartCookingProviding?
     
     init(
         nextStepProvider: NextStepProviding? = nil,
         previousStepProvider: PreviousStepProviding? = nil,
         repeatStepProvider: RepeatStepProviding? = nil,
+        startCookingProvider: StartCookingProviding? = nil,
         currentRecipe: Recipe? = nil
     ) {
         self.nextStepProvider = nextStepProvider
         self.previousStepProvider = previousStepProvider
         self.repeatStepProvider = repeatStepProvider
+        self.startCookingProvider = startCookingProvider
         self.currentRecipe = currentRecipe
     }
     
@@ -41,6 +44,7 @@ class IntentHandler: NSObject, NextDirectionsIntentHandling, PreviousDirectionsI
     func provideRecipeOptionsCollection(for intent: RepeatDirectionsIntent, with completion: @escaping (INObjectCollection<Recipe>?, Error?) -> Void) {
         completion(INObjectCollection(items: Recipe.allRecipes), nil)
     }
+
     
     
     func resolveRecipe(for intent: NextDirectionsIntent, with completion: @escaping (RecipeResolutionResult) -> Void) {
@@ -101,6 +105,16 @@ class IntentHandler: NSObject, NextDirectionsIntentHandling, PreviousDirectionsI
         completion(repeatStepProvider.repeatStep(recipe: recipe))
     }
     
+    func handle(intent: StartIntent, completion: @escaping (StartIntentResponse) -> Void) {
+        guard let startCookingProvider = self.startCookingProvider,
+              UIApplication.shared.applicationState != .background else {
+            
+            completion(StartIntentResponse(code: .continueInApp, userActivity: nil))
+            return
+        }
+        completion(startCookingProvider.startCooking())
+    }
+    
     
     private func recipe(for intent: NextDirectionsIntent) -> Recipe? {
         return currentRecipe != nil ? currentRecipe : intent.recipe
@@ -145,5 +159,15 @@ protocol RepeatStepProviding: NSObject {
     
     @discardableResult
     func repeatStep(recipe: Recipe) -> RepeatDirectionsIntentResponse
+    
+}
+
+protocol StartCookingProviding: NSObject {
+    
+    /// The intent handler object processes resolve, confirm, and handle phases.
+    var intentHandler: IntentHandler { get }
+    
+    @discardableResult
+    func startCooking() -> StartIntentResponse
     
 }

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -20,6 +20,7 @@
 		609263712481E98500D8F593 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6092636F2481E98500D8F593 /* Main.storyboard */; };
 		609263762481E98600D8F593 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 609263742481E98600D8F593 /* LaunchScreen.storyboard */; };
 		955BBF96F06FF2BCC23C12E3 /* Pods_RecipeAssistant.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8BE00076B7147FA7F73F5AF /* Pods_RecipeAssistant.framework */; };
+		E8EB3AC028ABE01200AB91FD /* RecipeDirectionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8EB3ABF28ABE01200AB91FD /* RecipeDirectionsCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		60A8438526263126000ADAE9 /* RecipeAssistant.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RecipeAssistant.entitlements; sourceTree = "<group>"; };
 		8B739E206457DB37776DCCA6 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		CF58E93467886685FE1FAED8 /* Pods-RecipeAssistant.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RecipeAssistant.release.xcconfig"; path = "Target Support Files/Pods-RecipeAssistant/Pods-RecipeAssistant.release.xcconfig"; sourceTree = "<group>"; };
+		E8EB3ABF28ABE01200AB91FD /* RecipeDirectionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDirectionsCell.swift; sourceTree = "<group>"; };
 		F3B442E20DFE0637B2C796FA /* SampleCode.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = SampleCode.xcconfig; path = Configuration/SampleCode.xcconfig; sourceTree = "<group>"; };
 		F8BE00076B7147FA7F73F5AF /* Pods_RecipeAssistant.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RecipeAssistant.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -71,7 +73,6 @@
 			isa = PBXGroup;
 			children = (
 				3013B1792486E78F002881BC /* RecipeDetailViewController.swift */,
-				3013B1712486E78F002881BC /* RecipeDirectionsViewController.swift */,
 				3013B1782486E78F002881BC /* RecipesTableViewController.swift */,
 			);
 			path = "View Controllers";
@@ -132,6 +133,7 @@
 				3055949824958C2D00C8E389 /* Intent Handler */,
 				3055949724958C0800C8E389 /* Model */,
 				3055949624958BF400C8E389 /* View Controllers */,
+				E8EB3ABD28ABDF8400AB91FD /* RecipeDirections */,
 				6092636F2481E98500D8F593 /* Main.storyboard */,
 				3013B193248721B9002881BC /* Assets.xcassets */,
 				3013B18E248708D5002881BC /* Intents.intentdefinition */,
@@ -163,6 +165,23 @@
 				F3B442E20DFE0637B2C796FA /* SampleCode.xcconfig */,
 			);
 			name = Configuration;
+			sourceTree = "<group>";
+		};
+		E8EB3ABD28ABDF8400AB91FD /* RecipeDirections */ = {
+			isa = PBXGroup;
+			children = (
+				E8EB3ABE28ABDF9700AB91FD /* Views */,
+			);
+			path = RecipeDirections;
+			sourceTree = "<group>";
+		};
+		E8EB3ABE28ABDF9700AB91FD /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3013B1712486E78F002881BC /* RecipeDirectionsViewController.swift */,
+				E8EB3ABF28ABE01200AB91FD /* RecipeDirectionsCell.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -253,7 +272,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "echo ${SRCROOT}\necho ${PODS_ROOT}\ndiff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D840287724FF59E0E70256F4 /* [CP] Embed Pods Frameworks */ = {
@@ -262,9 +281,11 @@
 			files = (
 			);
 			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RecipeAssistant/Pods-RecipeAssistant-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-RecipeAssistant/Pods-RecipeAssistant-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -279,6 +300,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				305594922493EF9500C8E389 /* IntentHandler.swift in Sources */,
+				E8EB3AC028ABE01200AB91FD /* RecipeDirectionsCell.swift in Sources */,
 				3013B1802486E78F002881BC /* AppIntentHandler.swift in Sources */,
 				3013B190248708D5002881BC /* Intents.intentdefinition in Sources */,
 				3013B1812486E78F002881BC /* RecipesTableViewController.swift in Sources */,
@@ -322,7 +344,7 @@
 /* Begin XCBuildConfiguration section */
 		609263782481E98600D8F593 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F3B442E20DFE0637B2C796FA /* SampleCode.xcconfig */;
+			baseConfigurationReference = 20D81E329E9BAB2AD57D08D2 /* Pods-RecipeAssistant.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -384,7 +406,7 @@
 		};
 		609263792481E98600D8F593 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F3B442E20DFE0637B2C796FA /* SampleCode.xcconfig */;
+			baseConfigurationReference = CF58E93467886685FE1FAED8 /* Pods-RecipeAssistant.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -440,7 +462,7 @@
 		};
 		6092637B2481E98600D8F593 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F3B442E20DFE0637B2C796FA /* SampleCode.xcconfig */;
+			baseConfigurationReference = 20D81E329E9BAB2AD57D08D2 /* Pods-RecipeAssistant.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = RecipeAssistant/RecipeAssistant.entitlements;
@@ -452,8 +474,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.1;
-				PODS_PODFILE_DIR_PATH = "${SRCROOT}/";
-				PODS_ROOT = "${SRCROOT}/Pods";
+				PODS_PODFILE_DIR_PATH = "$(inherited)";
+				PODS_ROOT = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.thekono.recipe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -465,7 +487,7 @@
 		};
 		6092637C2481E98600D8F593 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F3B442E20DFE0637B2C796FA /* SampleCode.xcconfig */;
+			baseConfigurationReference = CF58E93467886685FE1FAED8 /* Pods-RecipeAssistant.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = RecipeAssistant/RecipeAssistant.entitlements;
@@ -477,8 +499,8 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.1;
-				PODS_PODFILE_DIR_PATH = "${SRCROOT}/";
-				PODS_ROOT = "${SRCROOT}/Pods";
+				PODS_PODFILE_DIR_PATH = "$(inherited)";
+				PODS_ROOT = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.thekono.recipe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

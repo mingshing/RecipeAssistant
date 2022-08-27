@@ -52,6 +52,11 @@ extension SceneDelegate {
            let viewController = rootViewController.viewControllers.last as? RepeatStepProviding {
             viewController.repeatStep(recipe: recipe)
         }
+        
+        if let _ = interaction.intent as? StartIntent,
+           let viewController = rootViewController.viewControllers.last as? StartCookingProviding {
+            viewController.startCooking()
+        }
     }
     
 }

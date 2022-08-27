@@ -145,26 +145,6 @@
 						<key>INIntentResponseCodeName</key>
 						<string>failure</string>
 					</dict>
-					<dict>
-						<key>INIntentResponseCodeFormatString</key>
-						<string>Step ${step}. ${directions}</string>
-						<key>INIntentResponseCodeFormatStringID</key>
-						<string>nMxLKM</string>
-						<key>INIntentResponseCodeName</key>
-						<string>showDirections</string>
-						<key>INIntentResponseCodeSuccess</key>
-						<true/>
-					</dict>
-					<dict>
-						<key>INIntentResponseCodeFormatString</key>
-						<string>Here are the ingredients for ${recipe}</string>
-						<key>INIntentResponseCodeFormatStringID</key>
-						<string>9sVy7Z</string>
-						<key>INIntentResponseCodeName</key>
-						<string>showIngredients</string>
-						<key>INIntentResponseCodeSuccess</key>
-						<true/>
-					</dict>
 				</array>
 				<key>INIntentResponseLastParameterTag</key>
 				<integer>7</integer>
@@ -584,6 +564,62 @@
 			<string>Repeat Directions</string>
 			<key>INIntentTitleID</key>
 			<string>hXN5dr</string>
+			<key>INIntentType</key>
+			<string>Custom</string>
+			<key>INIntentVerb</key>
+			<string>Open</string>
+		</dict>
+		<dict>
+			<key>INIntentCategory</key>
+			<string>information</string>
+			<key>INIntentConfigurable</key>
+			<true/>
+			<key>INIntentDescription</key>
+			<string>Let's start cooking</string>
+			<key>INIntentDescriptionID</key>
+			<string>mCEn3K</string>
+			<key>INIntentManagedParameterCombinations</key>
+			<dict>
+				<key></key>
+				<dict>
+					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
+					<true/>
+					<key>INIntentParameterCombinationUpdatesLinked</key>
+					<true/>
+				</dict>
+			</dict>
+			<key>INIntentName</key>
+			<string>Start</string>
+			<key>INIntentParameterCombinations</key>
+			<dict>
+				<key></key>
+				<dict>
+					<key>INIntentParameterCombinationIsPrimary</key>
+					<true/>
+					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
+					<true/>
+				</dict>
+			</dict>
+			<key>INIntentResponse</key>
+			<dict>
+				<key>INIntentResponseCodes</key>
+				<array>
+					<dict>
+						<key>INIntentResponseCodeName</key>
+						<string>success</string>
+						<key>INIntentResponseCodeSuccess</key>
+						<true/>
+					</dict>
+					<dict>
+						<key>INIntentResponseCodeName</key>
+						<string>failure</string>
+					</dict>
+				</array>
+			</dict>
+			<key>INIntentTitle</key>
+			<string>Start cooking</string>
+			<key>INIntentTitleID</key>
+			<string>O8QQxT</string>
 			<key>INIntentType</key>
 			<string>Custom</string>
 			<key>INIntentVerb</key>

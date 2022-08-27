@@ -8,7 +8,7 @@ A view controller that displays attributes of a recipe, such as the necessary in
 import UIKit
 import Intents
 
-class RecipeDetailViewController: UITableViewController, NextStepProviding {
+class RecipeDetailViewController: UITableViewController, StartCookingProviding {
     
     var recipe: Recipe!
     
@@ -36,30 +36,61 @@ class RecipeDetailViewController: UITableViewController, NextStepProviding {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         AppIntentHandler.shared.currentIntentHandler = intentHandler
+        
+        configHeaderView()
     }
     
-    // MARK: - Navigation
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "Directions" {
-            if let destination = segue.destination as? RecipeDirectionsViewController {
-                destination.recipe = recipe
-            }
+    private func configHeaderView() {
+        
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 58))
+        let actionButton: UIButton = {
+            let button = UIButton()
+            button.setTitle("開始", for: .normal)
+            button.setTitleColor(.black, for: .normal)
+            button.layer.borderColor = UIColor.darkGray.cgColor
+            button.layer.borderWidth = 2
+            button.layer.cornerRadius = 8
+            button.addTarget(self, action: #selector(tapStart), for: .touchUpInside)
+            return button
+        }()
+        headerView.addSubview(actionButton)
+        actionButton.snp.makeConstraints { make in
+            
+            make.left.right.equalToSuperview().inset(20)
+            make.bottom.equalToSuperview()
+            make.height.equalTo(48)
         }
+        self.tableView.tableHeaderView = headerView
     }
+    
+    
+    @objc func tapStart() {
+        
+        print("tap start")
+        let directionsVC = RecipeDirectionsViewController(recipe: recipe)
+        //bookIntroVC.hidesBottomBarWhenPushed = true
+        show(directionsVC, sender: self)
+    }
+
+    
     
     // MARK: - NextStepProviding
     
-    lazy var intentHandler = IntentHandler(nextStepProvider: self, currentRecipe: recipe)
+    lazy var intentHandler = IntentHandler()
     
+    func startCooking() -> StartIntentResponse {
+        tapStart()
+        return StartIntentResponse(code: .success, userActivity: nil)
+    }
+/*
     func nextStep(recipe: Recipe) -> NextDirectionsIntentResponse {
         guard let directions = recipe.directions, let firstDirection = directions.first else {
             return NextDirectionsIntentResponse(code: .failure, userActivity: nil)
         }
         performSegue(withIdentifier: "Directions", sender: recipe)
-        return NextDirectionsIntentResponse.showDirections(step: NSNumber(value: 1), directions: firstDirection)
+        return NextDirectionsIntentResponse(code: .success, userActivity: nil)
     }
-    
+*/
 }
 
 extension RecipeDetailViewController {

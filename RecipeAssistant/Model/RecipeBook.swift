@@ -38,7 +38,8 @@ extension Recipe {
                     "Season with salt and freshly ground black pepper to taste.",
                     "Once the sauce is reduced and reaches desired consistency, " +
                     "use immediately or cool and store in fridge or freezer. "
-                   ]),
+                   ],
+                   directionDetails: []),
             Recipe(name: "Chickpea Curry",
                    iconImageName: "chickpea_curry",
                    servings: "3",
@@ -69,7 +70,8 @@ extension Recipe {
                     "Add the chopped tomatoes, chopped basil, lime juice, soy sauce and gently simmer the curry for another 2 minutes.",
                     "If desired, add a second tbsp soy sauce and the syrup or brown sugar. Give it another stir.",
                     "Garnish with cilantro and serve with lime wedges and rice."
-                   ]
+                   ],
+                   directionDetails: []
             ),
             Recipe(name: "香菇雞湯",
                    iconImageName: "test_recipe",
@@ -96,16 +98,56 @@ extension Recipe {
                     "加入鹽和枸杞，熬煮約 5 分鐘",
                     "熄火，燜 3-5 分鐘",
                     "完成"
-                   ])
+                   ],
+                   directionDetails: []
+            ),
+            Recipe(name: "香煎雞腿排",
+                   iconImageName: "chicken",
+                   servings: "",
+                   time: "30 分鐘",
+                   ingredients: [
+                    "無骨雞腿排 250 克",
+                    "鹽巴 適量",
+                    "大蒜 1 顆",
+                    "迷迭香 2 小支"
+                   ],
+                   directions: [
+                    "將雞腿排周圍多餘的油脂修乾淨。",
+                    "觀察肌肉紋理，將銀白色的細筋充分切斷，或者也可以直接在肉上逆紋畫刀。",
+                    "用刀尖在皮面戳一些小洞。",
+                    "雞肉兩面充分撒上鹽巴抹勻，並靜置 10-15 分鐘。",
+                    "下鍋前把醃漬析出的水分充分擦乾。",
+                    "從小火開始熱鍋，加一點油稍微熱鍋一下，就可以將雞腿排皮面朝下放入。過程中維持小火即可。",
+                    "取一片萬用料理紙，折成大約雞腿排面積，放在雞腿排上。",
+                    "放上 300-400 克的重物壓著持續小火乾煎。將大蒜切半和迷迭香一起放入乾煎約 4-5 分鐘。",
+                    "將重物移開，利用煎雞肉的油澆淋雞肉表面。",
+                    "將雞腿排翻面，肉面只要煎 1-2 分鐘即可。",
+                    "起鍋後先靜置冷卻一下再切，可以保留肉汁。"
+                   ],
+                   directionDetails: [
+                    "無骨雞腿排 250 克",
+                    "",
+                    "",
+                    "鹽巴 適量",
+                    "",
+                    "",
+                    "",
+                    "大蒜 1 顆 、迷迭香 2 小支",
+                    "",
+                    "",
+                    ""
+                   ]
+                  )
         ]
     }
     
-    convenience init(name: String, iconImageName: String, servings: String, time: String, ingredients: [String], directions: [String]) {
+    convenience init(name: String, iconImageName: String, servings: String, time: String, ingredients: [String], directions: [String], directionDetails: [String]) {
         self.init(identifier: name, display: name, subtitle: nil, image: INImage(named: iconImageName))
         self.servings = servings
         self.time = time
         self.ingredients = ingredients
         self.directions = directions
+        self.directionDetails = directionDetails
         self.iconImageName = iconImageName
     }
     

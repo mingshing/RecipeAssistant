@@ -46,7 +46,7 @@ class RecipeDetailViewController: UITableViewController, StartCookingProviding {
         let actionButton: UIButton = {
             let button = UIButton()
             button.setTitle("開始", for: .normal)
-            button.setTitleColor(.black, for: .normal)
+            button.setTitleColor(UIColor(named: "textBlack"), for: .normal)
             button.layer.borderColor = UIColor.darkGray.cgColor
             button.layer.borderWidth = 2
             button.layer.cornerRadius = 8

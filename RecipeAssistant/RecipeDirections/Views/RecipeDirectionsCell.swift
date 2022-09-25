@@ -25,7 +25,7 @@ class RecipeDirectionsCell: UITableViewCell {
         label.numberOfLines = 0
         label.font = .systemFont(ofSize: 80, weight: .bold)
         label.textAlignment = .left
-        label.textColor = .black
+        label.textColor = UIColor(named: "textBlack")
         return label
     }()
     

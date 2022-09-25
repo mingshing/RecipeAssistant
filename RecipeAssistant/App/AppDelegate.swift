@@ -17,7 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         guard intent is NextDirectionsIntent ||
                 intent is PreviousDirectionsIntent ||
                 intent is RepeatDirectionsIntent ||
-                intent is StartIntent else {
+                intent is StartIntent ||
+                intent is IngredientIntent else {
             return nil
         }
         

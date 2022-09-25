@@ -8,7 +8,7 @@ An intent handler for `ShowDirectionsIntent` that returns recipes and the next s
 import UIKit
 import Intents
 
-class IntentHandler: NSObject, NextDirectionsIntentHandling, PreviousDirectionsIntentHandling, RepeatDirectionsIntentHandling, StartIntentHandling {
+class IntentHandler: NSObject, NextDirectionsIntentHandling, PreviousDirectionsIntentHandling, RepeatDirectionsIntentHandling, StartIntentHandling, IngredientIntentHandling {
 
     
     var currentRecipe: Recipe?
@@ -16,18 +16,20 @@ class IntentHandler: NSObject, NextDirectionsIntentHandling, PreviousDirectionsI
     weak var previousStepProvider: PreviousStepProviding?
     weak var repeatStepProvider: RepeatStepProviding?
     weak var startCookingProvider: StartCookingProviding?
-    
+    weak var ingredientProvider: CheckIngredientProviding?
     init(
         nextStepProvider: NextStepProviding? = nil,
         previousStepProvider: PreviousStepProviding? = nil,
         repeatStepProvider: RepeatStepProviding? = nil,
         startCookingProvider: StartCookingProviding? = nil,
+        ingredientProvider: CheckIngredientProviding? = nil,
         currentRecipe: Recipe? = nil
     ) {
         self.nextStepProvider = nextStepProvider
         self.previousStepProvider = previousStepProvider
         self.repeatStepProvider = repeatStepProvider
         self.startCookingProvider = startCookingProvider
+        self.ingredientProvider = ingredientProvider
         self.currentRecipe = currentRecipe
     }
     
@@ -115,6 +117,16 @@ class IntentHandler: NSObject, NextDirectionsIntentHandling, PreviousDirectionsI
         completion(startCookingProvider.startCooking())
     }
     
+    func handle(intent: IngredientIntent, completion: @escaping (IngredientIntentResponse) -> Void) {
+        guard let ingredientProvider = self.ingredientProvider,
+        UIApplication.shared.applicationState != .background else {
+            completion(IngredientIntentResponse(code: .continueInApp, userActivity: nil))
+            return
+        }
+
+        completion(ingredientProvider.checkIngredient())
+    }
+    
     
     private func recipe(for intent: NextDirectionsIntent) -> Recipe? {
         return currentRecipe != nil ? currentRecipe : intent.recipe
@@ -169,5 +181,15 @@ protocol StartCookingProviding: NSObject {
     
     @discardableResult
     func startCooking() -> StartIntentResponse
+    
+}
+
+protocol CheckIngredientProviding: NSObject {
+    
+    /// The intent handler object processes resolve, confirm, and handle phases.
+    var intentHandler: IntentHandler { get }
+    
+    @discardableResult
+    func checkIngredient() -> IngredientIntentResponse
     
 }

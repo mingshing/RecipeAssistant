@@ -23,6 +23,7 @@
 	<key>INIntentsSupported</key>
 	<array>
 		<string>StartIntent</string>
+		<string>IngredientIntent</string>
 		<string>RepeatDirectionsIntent</string>
 		<string>NextDirectionsIntent</string>
 		<string>PreviousDirectionsIntent</string>
@@ -33,10 +34,11 @@
 	<true/>
 	<key>NSUserActivityTypes</key>
 	<array>
-		<string>StartIntent</string>
+		<string>IngredientIntent</string>
 		<string>NextDirectionsIntent</string>
 		<string>PreviousDirectionsIntent</string>
 		<string>RepeatDirectionsIntent</string>
+		<string>StartIntent</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>

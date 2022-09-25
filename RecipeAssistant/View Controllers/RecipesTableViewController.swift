@@ -64,6 +64,15 @@ class RecipesTableViewController: UITableViewController, NextStepProviding {
         startButton.shortcut = startIntent
         startButton.delegate = self
         
+        let ingredientIntent = INShortcut(intent: {
+            let intent = IngredientIntent()
+            intent.suggestedInvocationPhrase = "食材數量"
+            return intent
+        }())
+        let gredientButton = INUIAddVoiceShortcutButton(style: .automaticOutline)
+        gredientButton.shortcut = ingredientIntent
+        gredientButton.delegate = self
+        
         let siriButtonContainer: UIStackView = {
             let container = UIStackView()
             container.axis = .horizontal
@@ -84,7 +93,7 @@ class RecipesTableViewController: UITableViewController, NextStepProviding {
         siriButtonContainer.addArrangedSubview(prevButton)
         siriButtonContainer.addArrangedSubview(repeatButton)
         siriButtonContainer.addArrangedSubview(startButton)
-    
+        siriButtonContainer.addArrangedSubview(gredientButton)
         self.tableView.tableFooterView = footerView
     }
     

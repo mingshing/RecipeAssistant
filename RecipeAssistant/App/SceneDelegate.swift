@@ -57,6 +57,11 @@ extension SceneDelegate {
            let viewController = rootViewController.viewControllers.last as? StartCookingProviding {
             viewController.startCooking()
         }
+        
+        if let _ = interaction.intent as? IngredientIntent,
+           let viewController = rootViewController.viewControllers.last as? CheckIngredientProviding {
+            viewController.checkIngredient()
+        }
     }
     
 }

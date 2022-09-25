@@ -107,9 +107,22 @@ extension RecipeDetailViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "DefaultCell", for: indexPath)
+        let selectSectionData = sectionData[indexPath.section]
         cell.textLabel?.text = sectionData[indexPath.section].rowContent[indexPath.row]
         cell.textLabel?.numberOfLines = 0
+        cell.accessoryType = selectSectionData.sectionType == .directions ? .disclosureIndicator : .none
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let selectSectionData = sectionData[indexPath.section]
+        if selectSectionData.sectionType == .directions {
+            
+            let targetStep = indexPath.row + 1
+            let directionsVC = RecipeDirectionsViewController(recipe: recipe, startStep: targetStep)
+            show(directionsVC, sender: self)
+        }
     }
 }
 

@@ -29,6 +29,14 @@ class RecipeDirectionsCell: UITableViewCell {
         return label
     }()
     
+    let requireIngredientLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.font = .systemFont(ofSize: 36, weight: .bold)
+        label.textAlignment = .left
+        label.textColor = UIColor(named: "textBlack")
+        return label
+    }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -51,9 +59,16 @@ class RecipeDirectionsCell: UITableViewCell {
         */
         
         contentView.addSubview(directionsLabel)
+        contentView.addSubview(requireIngredientLabel)
         directionsLabel.snp.makeConstraints { make in
             make.right.left.equalToSuperview().inset(20)
-            make.top.bottom.equalToSuperview().inset(40)
+            make.top.equalToSuperview().inset(40)
+        }
+        
+        requireIngredientLabel.snp.makeConstraints { make in
+            make.left.right.equalTo(directionsLabel)
+            make.top.equalTo(directionsLabel.snp.bottom).offset(20)
+            make.bottom.equalToSuperview().inset(40)
         }
     }
 }

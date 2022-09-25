@@ -11,7 +11,7 @@ import Intents
 import IntentsUI
 import AVFoundation
 
-class RecipeDirectionsViewController: UIViewController, NextStepProviding, PreviousStepProviding, RepeatStepProviding {
+class RecipeDirectionsViewController: UIViewController, NextStepProviding, PreviousStepProviding, RepeatStepProviding, CheckIngredientProviding {
     
     private lazy var tableView: UITableView = { [weak self] in
         let table = UITableView(frame: CGRect.zero, style: .insetGrouped)
@@ -34,9 +34,10 @@ class RecipeDirectionsViewController: UIViewController, NextStepProviding, Previ
             self.readSentence(directions[currentStep - 1])
         }
     }
-    
-    init(recipe: Recipe) {
+    private var startStep: Int
+    init(recipe: Recipe, startStep: Int = 1) {
         self.recipe = recipe
+        self.startStep = startStep
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -51,8 +52,7 @@ class RecipeDirectionsViewController: UIViewController, NextStepProviding, Previ
     override func viewDidLoad() {
         super.viewDidLoad()
         setAudioSession()
-        currentStep = 1
-        
+        currentStep = startStep
         self.navigationController?.isToolbarHidden = false
         setupView()
     }
@@ -129,11 +129,22 @@ class RecipeDirectionsViewController: UIViewController, NextStepProviding, Previ
         return RepeatDirectionsIntentResponse(code: .success, userActivity: nil)
     }
     
+    @discardableResult
+    func checkIngredient() -> IngredientIntentResponse {
+        guard let ingredients = self.recipe.directionDetails else {
+            return IngredientIntentResponse(code: .failure, userActivity: nil)
+        }
+        readSentence(ingredients[currentStep - 1])
+        
+        return IngredientIntentResponse(code: .success, userActivity: nil)
+    }
+    
     private func readSentence(_ str: String) {
         let seconds = 0.5
         DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
             let utterance = AVSpeechUtterance(string: str)
             utterance.voice = AVSpeechSynthesisVoice(language: "zh-Hant")
+            self.ttsManager.stopSpeaking(at: .immediate)
             self.ttsManager.speak(utterance)
         }
     }
@@ -153,6 +164,10 @@ extension RecipeDirectionsViewController: UITableViewDelegate, UITableViewDataSo
         if let cell = cell as? RecipeDirectionsCell {
             //cell.stepLabel.text = "\(currentStep)"
             cell.directionsLabel.text = recipe.directions?[currentStep - 1]
+            if let directionDetail = recipe.directionDetails?[currentStep - 1],
+               !directionDetail.isEmpty{
+                cell.requireIngredientLabel.text = "食材:\t" + directionDetail
+            }
         }
         return cell
     }
@@ -164,7 +179,3 @@ extension RecipeDirectionsViewController: UITableViewDelegate, UITableViewDataSo
         return "Step \(currentStep) of \(directions.count)"
     }
 }
-
-
-
-

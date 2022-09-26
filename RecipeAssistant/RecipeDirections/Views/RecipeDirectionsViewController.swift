@@ -167,6 +167,8 @@ extension RecipeDirectionsViewController: UITableViewDelegate, UITableViewDataSo
             if let directionDetail = recipe.directionDetails?[currentStep - 1],
                !directionDetail.isEmpty{
                 cell.requireIngredientLabel.text = "食材:\t" + directionDetail
+            } else {
+                cell.requireIngredientLabel.text = ""
             }
         }
         return cell
